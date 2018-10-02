@@ -7,7 +7,9 @@ import com.mindorks.placeholderview.Animation;
 import com.mindorks.placeholderview.PlaceHolderView;
 import com.mindorks.placeholderview.annotations.Animate;
 import com.mindorks.placeholderview.annotations.Layout;
+import com.mindorks.placeholderview.annotations.LongClick;
 import com.mindorks.placeholderview.annotations.NonReusable;
+import com.mindorks.placeholderview.annotations.Resolve;
 import com.mindorks.placeholderview.annotations.View;
 
 /**
@@ -29,5 +31,12 @@ public class ImageTypeBig {
         mContext = context;
         mPlaceHolderView = placeHolderView;
         mUlr = ulr;
+    }
+    @Resolve
+    private void onResolved(){
+
+    }
+    @LongClick(R.id.imageView){
+        mPlaceHolderView.removeView(this);
     }
 }
