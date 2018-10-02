@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.andromeeda.project.gallerynew.MainActivity">
 
-    <com.mindorks.placeholderview.SwipePlaceHolderView
+    <com.mindorks.placeholderview.PlaceHolderView
         android:id="@+id/galleryView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
