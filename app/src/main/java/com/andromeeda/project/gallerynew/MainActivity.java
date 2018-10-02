@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mGalleryNew = findViewById(R.id.galleryView);
+        mGalleryNew = (PlaceHolderView) findViewById(R.id.galleryView);
         mGalleryNew
                 .addView(new GalleryItem(getResources().getDrawable(R.drawable.home_img1)))
                 .addView(new GalleryItem(getResources().getDrawable(R.drawable.home_img2)))

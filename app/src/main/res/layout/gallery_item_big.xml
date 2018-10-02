@@ -8,5 +8,6 @@
        android:layout_width="match_parent"
        android:layout_height="225dp"
        android:scaleType="centerCrop"
-       android:scrollbars="vertical"/>
+       android:scrollbars="vertical"
+       android:src="@drawable/home_img1"/>
 </LinearLayout>
