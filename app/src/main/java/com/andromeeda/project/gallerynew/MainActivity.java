@@ -83,11 +83,5 @@ public class MainActivity extends AppCompatActivity {
 //        drawables.add(getResources().getDrawable(R.drawable.home_img5));
 //        drawables.add(getResources().getDrawable(R.drawable.home_img6));
 //    }
-//    private void setSelectedImage(int selectedImage){
-//        BitmapDrawable bd = (BitmapDrawable) drawables.get(selectedImagePosition);
-//        Bitmap b = Bitmap.createScaledBitmap(bd.getBitmap(),(int)(bd.getIntrinsicHeight()*0.9),(int)(bd.getIntrinsicWidth()*0.7),false);
-//        selectedImageView.setImageBitmap(b);
-//        selectedImageView.setScaleType(ImageView.ScaleType.FIT_XY);
-//
-//    }
+
 }

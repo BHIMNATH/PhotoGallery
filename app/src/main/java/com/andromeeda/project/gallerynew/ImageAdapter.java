@@ -21,7 +21,7 @@ public class ImageAdapter extends PagerAdapter {
             R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
             R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10,R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
             R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10,R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
-            R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10,
+            R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10
         };
 
     ImageAdapter(Context context){
