@@ -1,12 +1,15 @@
 package com.andromeeda.project.gallerynew;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Gallery;
@@ -26,7 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private List<Drawable> drawables;
     private Gallery gallery;
 
+    private ScaleGestureDetector mScaleGestureDetector;
+    private float mScaleFactor = 1.0f;
+    private ImageView mImageView;
     private ListView listView;
+    private Matrix matrix = new Matrix();
+    private ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +58,21 @@ public class MainActivity extends AppCompatActivity {
 //        selectedImageView = findViewById(R.id.selectedImage);
 //        gallery = findViewById(R.id.Gallery);
 
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent motionEvent){
+        mScaleGestureDetector.onTouchEvent(motionEvent);
+        return true;
+    }
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
+            float scaleFactor = scaleGestureDetector.getScaleFactor();
+            scaleFactor = Math.max(0.1f,Math.min(scaleFactor,5.0f));
+            matrix.setScale(scaleFactor,scaleFactor);
+            mImageView.setImageMatrix(matrix);
+            return true;
+        }
     }
 //        gallery.setAdapter(new ImageAdapter(getActivity().getApplicationContext()));
 
@@ -83,5 +106,11 @@ public class MainActivity extends AppCompatActivity {
 //        drawables.add(getResources().getDrawable(R.drawable.home_img5));
 //        drawables.add(getResources().getDrawable(R.drawable.home_img6));
 //    }
-
+//    private void setSelectedImage(int selectedImage){
+//        BitmapDrawable bd = (BitmapDrawable) drawables.get(selectedImagePosition);
+//        Bitmap b = Bitmap.createScaledBitmap(bd.getBitmap(),(int)(bd.getIntrinsicHeight()*0.9),(int)(bd.getIntrinsicWidth()*0.7),false);
+//        selectedImageView.setImageBitmap(b);
+//        selectedImageView.setScaleType(ImageView.ScaleType.FIT_XY);
+//
+//    }
 }
