@@ -17,17 +17,16 @@ import com.mindorks.placeholderview.annotations.View;
 @NonReusable
 @Layout(R.layout.gallery_item_big)
 class GalleryItem {
-
-    @View(R.id.imageView)
-    private ImageView imageView;
-
-    private Drawable mDrawable;
-
-    GalleryItem(Drawable drawable){
-        mDrawable = drawable;
-    }
-    @Resolve
-    private void onResolved(){
-        imageView.setImageDrawable(mDrawable);
-    }
 }
+//    @View(R.id.imageView)
+//    private ImageView imageView;
+//
+//    private Drawable mDrawable;
+//
+//    GalleryItem(Drawable drawable){
+//        mDrawable = drawable;
+//    }
+//    @Resolve
+//    private void onResolved(){
+//        imageView.setImageDrawable(mDrawable);
+//    }
