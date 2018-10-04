@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView selectedImageView;
     private List<Drawable> drawables;
     private Gallery gallery;
-
+    ScaleListener scaleListener;
     private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
     private ImageView mImageView;
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        scaleListener.onScale(mScaleGestureDetector);
 
         ViewPager viewPager = findViewById(R.id.viewPager);
         ImageAdapter mAdapter = new ImageAdapter(this);
