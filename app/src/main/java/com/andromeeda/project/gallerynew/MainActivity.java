@@ -29,22 +29,24 @@ public class MainActivity extends AppCompatActivity {
     private List<Drawable> drawables;
     private Gallery gallery;
     ScaleListener scaleListener;
-    private ScaleGestureDetector mScaleGestureDetector;
     private float mScaleFactor = 1.0f;
     private ImageView mImageView;
     private ListView listView;
     private Matrix matrix = new Matrix();
     private ViewPager viewPager;
+    View main;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        scaleListener.onScale(mScaleGestureDetector);
+        main = findViewById(R.id.full);
+//        scaleListener.onScale(mScaleGestureDetector);
 
         ViewPager viewPager = findViewById(R.id.viewPager);
         ImageAdapter mAdapter = new ImageAdapter(this);
         viewPager.setAdapter(mAdapter);
+//        viewPager.onTouchEvent()
 
 //        GridView gridView = (GridView) findViewById(R.id.gridview);
 //        gridView.setAdapter(new ImageAdapter(this));
@@ -61,9 +63,13 @@ public class MainActivity extends AppCompatActivity {
 //        gallery = findViewById(R.id.Gallery);
 
     }
+
     @Override
-    public boolean onTouchEvent(MotionEvent motionEvent){
-        mScaleGestureDetector.onTouchEvent(motionEvent);
+    public boolean onTouchEvent(MotionEvent event) {
+        main.setPivotX(2f);
+        main.setPivotY(2f);
+        main.setScaleX(0);
+        main.setScaleX(0);
         return true;
     }
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener{
