@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
     class ImageAdapter extends BaseAdapter {
         private LayoutInflater layoutInflater;
 
-        public ImageAdapter(MainActivity activity) {
+
+        ImageAdapter(MainActivity activity) {
             layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
