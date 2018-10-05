@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private int mShortAnimationDuration;
     private int j = 0;
 
-    private final GestureDetector gestureDetector = new GestureDetector(this, new SwipeGesterDetector());
+    private GestureDetector gestureDetector;
     private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPT_THRESHOLD_VELOCITY = 200;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     public int thumb[] = {
             R.drawable.home_img1, R.drawable.home_img2, R.drawable.home_img3, R.drawable.home_img4, R.drawable.home_img5,
@@ -48,16 +48,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        gv = findViewById(R.id.grid_view);
-        gv.setAdapter(new ImageAdapter());
+        gestureDetector = new GestureDetector(this, new SwipeGestureDetector());
+
+        gv = (GridView) findViewById(R.id.grid_view);
+        gv.setAdapter(new ImageAdapter(this));
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                j = position;
-                zoomImageFromThumb(view, thumb[position]);
+            public void onItemClick(AdapterView<?> parent, View v, int pos,
+                                    long id) {
+                j = pos;
+                zoomImageFromThumb(v, thumb[pos]);
             }
         });
-        mShortAnimationDuration = getResources().getInteger(R.integer.config_shortAnimTime);
+        mShortAnimationDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
     }
 
 
@@ -215,6 +219,45 @@ public class MainActivity extends AppCompatActivity {
                 mCurrentAnimator = set;
             }
         });
+    }
+    private class SwipeGestureDetector extends GestureDetector.SimpleOnGestureListener{
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
+                               float velocityY) {
+
+            try {
+
+                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY){
+
+                    if(thumb.length > j) {
+                        j++;
+
+                        if(j < thumb.length) {
+                            expandedImageView.setImageResource(thumb[j]);
+                            return true;
+                        } else {
+                            j = 0;
+                            expandedImageView.setImageResource(thumb[j]);
+                            return true;
+                        }
+                    }
+                } else if(e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+
+                    if(j > 0) {
+                        j--;
+                        expandedImageView.setImageResource(thumb[j]);
+                        return true;
+                    } else {
+                        j = thumb.length - 1;
+                        expandedImageView.setImageResource(thumb[j]);
+                        return true;
+                    }
+                }
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
     }
 
 //    @Override
