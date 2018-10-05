@@ -1,7 +1,11 @@
 package com.andromeeda.project.gallerynew;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,9 +13,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -52,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    class ImageAdapter extends PagerAdapter {
+    class ImageAdapter extends BaseAdapter {
         private LayoutInflater layoutInflater;
 
         public ImageAdapter(MainActivity activity) {
@@ -65,15 +71,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getItemPosition(@NonNull Object object) {
-            return super.getItemPosition(object);
-        }
         public Object getItem(int pos){
             return pos;
         }
+
+        @Override
         public long getItemId(int pos){
             return pos;
         }
+        @Override
         public View getView(int pos, View convertView, ViewGroup parent){
             View listItem = convertView;
             int p = pos;
@@ -84,30 +90,81 @@ public class MainActivity extends AppCompatActivity {
             iv.setBackgroundResource(thumb[p]);
             return listItem;
         }
-        @NonNull
-        @Override
-        public Object instantiateItem(@NonNull ViewGroup container, int position) {
-//        TouchViewPagerImageView imgDisplay;
-
-            ImageView imageView = new ImageView(mContext);
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setImageResource(mThumbIds[position]);
-            container.addView(imageView, 0);
-            return imageView;
+    }
+    @SuppressLint("ClickableViewAccessibility")
+    private void zoomImageFromThumb(final View thumbView, int imageResId){
+        if(mCurrentAnimator != null){
+            mCurrentAnimator.cancel();
         }
+        expandedImageView = (ImageView) findViewById(R.id.expanded_image);
+        expandedImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(gestureDetector.onTouchEvent(event)){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        });
+        expandedImageView.setImageResource(imageResId);
 
-        @Override
-        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            container.removeView((ImageView) object);
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+        thumbView.getGlobalVisibleRect(startBounds);
+        findViewById(R.id.container).getGlobalVisibleRect(finalBounds,globalOffset);
 
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+        float startScale;
+        if((float) finalBounds.width()/finalBounds.height() > (float) startBounds.width()/startBounds.height()){
+            startScale = (float) startBounds.height()/finalBounds.height();
+
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width())/2;
+            startBounds.left -= deltaWidth;
+            startBounds.right -= deltaWidth;
         }
-
-        @Override
-        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-            return false;
+        else {
+            startScale = (float) startBounds.width()/finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height())/2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom -= deltaHeight;
         }
+        thumbView.setAlpha(0f);
+        expandedImageView.setVisibility(View.VISIBLE);
+        expandedImageView.setPivotX(0f);
+        expandedImageView.setPivotY(0f);
+
+        AnimatorSet set = new AnimatorSet();
+
+        set.play()
     }
 
+//    @Override
+//    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+////        TouchViewPagerImageView imgDisplay;
+//
+//        ImageView imageView = new ImageView(mContext);
+//        imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        imageView.setImageResource(mThumbIds[position]);
+//        container.addView(imageView, 0);
+//        return imageView;
+//    }
+//
+//    @Override
+//    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+//        container.removeView((ImageView) object);
+//
+//    }
+//
+//    @Override
+//    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+//        return false;
+//    }
 //        main = findViewById(R.id.full);
 ////        scaleListener.onScale(mScaleGestureDetector);
 //
