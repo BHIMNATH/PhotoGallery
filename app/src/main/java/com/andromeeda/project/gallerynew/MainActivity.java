@@ -1,10 +1,16 @@
 package com.andromeeda.project.gallerynew;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -19,14 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private static final int SWIPE_MIN_DISTANCE = 120;
     private static final int SWIPT_THRESHOLD_VELOCITY = 200;
 
-    private int thumb[]  = {
-            R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
-            R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10,R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
-            R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10,R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
-            R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10
+    public int thumb[] = {
+            R.drawable.home_img1, R.drawable.home_img2, R.drawable.home_img3, R.drawable.home_img4, R.drawable.home_img5,
+            R.drawable.home_img6, R.drawable.home_img7, R.drawable.home_img8, R.drawable.home_img9, R.drawable.home_img10, R.drawable.home_img1, R.drawable.home_img2, R.drawable.home_img3, R.drawable.home_img4, R.drawable.home_img5,
+            R.drawable.home_img6, R.drawable.home_img7, R.drawable.home_img8, R.drawable.home_img9, R.drawable.home_img10, R.drawable.home_img1, R.drawable.home_img2, R.drawable.home_img3, R.drawable.home_img4, R.drawable.home_img5,
+            R.drawable.home_img6, R.drawable.home_img7, R.drawable.home_img8, R.drawable.home_img9, R.drawable.home_img10
     };
 
     private ImageView expandedImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +45,68 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 j = position;
-                zoomImageFromThumb(view,thumb[position]);
+                zoomImageFromThumb(view, thumb[position]);
             }
         });
         mShortAnimationDuration = getResources().getInteger(R.integer.config_shortAnimTime);
     }
 
+
+    class ImageAdapter extends PagerAdapter {
+        private LayoutInflater layoutInflater;
+
+        public ImageAdapter(MainActivity activity) {
+            layoutInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public int getCount() {
+            return thumb.length;
+        }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            return super.getItemPosition(object);
+        }
+        public Object getItem(int pos){
+            return pos;
+        }
+        public long getItemId(int pos){
+            return pos;
+        }
+        public View getView(int pos, View convertView, ViewGroup parent){
+            View listItem = convertView;
+            int p = pos;
+            if(listItem == null){
+                listItem = layoutInflater.inflate(R.layout.single_grid_item,null);
+            }
+            ImageView iv = listItem.findViewById(R.id.thumb);
+            iv.setBackgroundResource(thumb[p]);
+            return listItem;
+        }
+        @NonNull
+        @Override
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//        TouchViewPagerImageView imgDisplay;
+
+            ImageView imageView = new ImageView(mContext);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageView.setImageResource(mThumbIds[position]);
+            container.addView(imageView, 0);
+            return imageView;
+        }
+
+        @Override
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            container.removeView((ImageView) object);
+
+        }
+
+        @Override
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
+            return false;
+        }
+    }
 
 //        main = findViewById(R.id.full);
 ////        scaleListener.onScale(mScaleGestureDetector);

@@ -15,7 +15,7 @@ import android.widget.ListView;
  * Created by Aswin on 02-Oct-18.
  */
 
-public class ImageAdapter extends PagerAdapter {
+class ImageAdapters extends PagerAdapter {
     private Context mContext;
     private int[] mThumbIds = new int[] {
             R.drawable.home_img1,R.drawable.home_img2,R.drawable.home_img3,R.drawable.home_img4,R.drawable.home_img5,
@@ -24,7 +24,7 @@ public class ImageAdapter extends PagerAdapter {
             R.drawable.home_img6,R.drawable.home_img7,R.drawable.home_img8,R.drawable.home_img9,R.drawable.home_img10
         };
 
-    ImageAdapter(Context context){
+    ImageAdapters(Context context){
         mContext = context;
     }
 
