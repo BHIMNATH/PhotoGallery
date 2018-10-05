@@ -41,6 +41,9 @@ public class ImageAdapter extends PagerAdapter {
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//        TouchViewPagerImageView imgDisplay;
+
+
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setImageResource(mThumbIds[position]);

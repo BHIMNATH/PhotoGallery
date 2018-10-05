@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/full"
+    android:id="@+id/containter"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewPager"
+    <GridView
+        android:id="@+id/grid_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.view.ViewPager>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:columnWidth="80dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="100dp">
+    </GridView>
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:visibility="invisible"/>
+</FrameLayout>
